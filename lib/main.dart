@@ -20,12 +20,23 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Despesas Pessoais"),
-      ),
-      body: const Center(
-        child: Text("Versão inicial"),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("Despesas Pessoais"),
+        ),
+        body: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              child: const Card(
+                child: Text("Gráfico"),
+                elevation: 5,
+                color: Colors.blue,
+              ),
+            ),
+            const Card(
+              child: Text("Lista de Transações"),
+            )
+          ],
+        ));
   }
 }
