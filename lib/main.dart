@@ -113,12 +113,15 @@ class MyHomePage extends StatelessWidget {
                       const TextField(
                         decoration: InputDecoration(labelText: "valor (R\$)"),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
                             onPressed: () {},
-                            child: const Text("Nova Transação"),
+                            child: const Text(
+                              "Nova Transação",
+                              style: TextStyle(color: Colors.purple),
+                            ),
                           ),
                         ],
                       )
