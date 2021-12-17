@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_expenses/components/transaction_form.dart';
 import 'package:personal_expenses/components/transaction_list.dart';
 import 'package:personal_expenses/models/transaction.dart';
 import 'package:intl/intl.dart';
@@ -18,9 +19,6 @@ class PersonalExpensesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
-
   final _transactions = [
     Transaction(
       id: 't1',
@@ -58,42 +56,7 @@ class MyHomePage extends StatelessWidget {
             TransactionList(
               transactions: _transactions,
             ),
-            Card(
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: titleController,
-                        decoration: const InputDecoration(
-                          labelText: "Título",
-                        ),
-                      ),
-                      TextField(
-                        controller: valueController,
-                        decoration:
-                            const InputDecoration(labelText: "valor (R\$)"),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Nova Transação",
-                              style: TextStyle(color: Colors.purple),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
+            TransactionForm()
           ],
         ));
   }
