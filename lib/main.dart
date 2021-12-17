@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expenses/components/transaction_form.dart';
-import 'package:personal_expenses/components/transaction_list.dart';
-import 'package:personal_expenses/models/transaction.dart';
-import 'package:intl/intl.dart';
+import 'package:personal_expenses/components/transaction_user.dart';
 
 main() => runApp(const PersonalExpensesApp());
 
@@ -11,7 +8,7 @@ class PersonalExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
@@ -19,22 +16,7 @@ class PersonalExpensesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Novo Tênis de Corrida',
-      value: 310.76,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 211.30,
-      date: DateTime.now(),
-    ),
-  ];
-
-  MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +35,7 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.blue,
               ),
             ),
-            TransactionList(
-              transactions: _transactions,
-            ),
-            TransactionForm()
+            const TransactionUser()
           ],
         ));
   }
