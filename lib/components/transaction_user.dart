@@ -29,12 +29,14 @@ class _TransactionUserState extends State<TransactionUser> {
   ];
 
   _addTransaction(String title, double value) {
+    final newTransaction = Transaction(
+        id: Random().nextDouble().toString(),
+        title: title,
+        value: value,
+        date: DateTime.now());
+
     setState(() {
-      _transactions.add(Transaction(
-          id: Random().nextDouble().toString(),
-          title: title,
-          value: value,
-          date: DateTime.now()));
+      _transactions.add(newTransaction);
     });
   }
 
