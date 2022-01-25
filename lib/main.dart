@@ -13,9 +13,14 @@ class PersonalExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: const MyHomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        colorScheme:
+            Theme.of(context).colorScheme.copyWith(secondary: Colors.amber),
+      ),
     );
   }
 }
