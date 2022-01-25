@@ -20,6 +20,19 @@ class PersonalExpensesApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         colorScheme:
             Theme.of(context).colorScheme.copyWith(secondary: Colors.amber),
+        fontFamily: "Quicksand",
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: const TextStyle(
+                  fontFamily: "OpenSans",
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700),
+            ),
+        appBarTheme: const AppBarTheme(
+          toolbarTextStyle: TextStyle(
+              fontFamily: "OpenSans",
+              fontSize: 20,
+              fontWeight: FontWeight.w700),
+        ),
       ),
     );
   }
