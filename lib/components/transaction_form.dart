@@ -25,6 +25,15 @@ class _TransactionFormState extends State<TransactionForm> {
     widget.addTransaction(title, value);
   }
 
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -52,7 +61,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 children: [
                   const Text("Nunhuma data selecionada!"),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: _showDatePicker,
                       child: Text(
                         "Selecionar Data",
                         style: TextStyle(
