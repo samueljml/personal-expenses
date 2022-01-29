@@ -27,6 +27,8 @@ class PersonalExpensesApp extends StatelessWidget {
                   fontFamily: "OpenSans",
                   fontSize: 20,
                   fontWeight: FontWeight.w700),
+              button: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
             ),
         appBarTheme: const AppBarTheme(
           toolbarTextStyle: TextStyle(
