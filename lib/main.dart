@@ -56,6 +56,15 @@ class _MyHomePageState extends State<MyHomePage> {
           .isAfter(DateTime.now().subtract(const Duration(days: 7))))
       .toList();
 
+  AppBar get appBar => AppBar(
+        title: const Text("Despesas Pessoais"),
+        actions: [
+          IconButton(
+              onPressed: () => _openTransactionFormModal(context),
+              icon: const Icon(Icons.add))
+        ],
+      );
+
   _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
@@ -86,23 +95,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final availableHeight = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top -
+        appBar.preferredSize.height;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Despesas Pessoais"),
-        actions: [
-          IconButton(
-              onPressed: () => _openTransactionFormModal(context),
-              icon: const Icon(Icons.add))
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(recentTransactions),
-            TransactionList(
-              _transactions,
-              onRemove: _removeTransaction,
+            SizedBox(
+              height: availableHeight * 0.3,
+              child: Chart(recentTransactions),
+            ),
+            SizedBox(
+              height: availableHeight * 0.7,
+              child: TransactionList(
+                _transactions,
+                onRemove: _removeTransaction,
+              ),
             ),
           ],
         ),
