@@ -58,6 +58,13 @@ class TransactionList extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       subtitle: Text(DateFormat('d MMM y').format(tr.date)),
+                      trailing: TextButton(
+                        onPressed: () {},
+                        child: const Icon(
+                          Icons.delete,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ),
                   );
                 },
