@@ -57,7 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
       .toList();
 
   AppBar get appBar => AppBar(
-        title: const Text("Despesas Pessoais"),
+        title: Text(
+          "Despesas Pessoais",
+          style:
+              TextStyle(fontSize: 20 * MediaQuery.of(context).textScaleFactor),
+        ),
         actions: [
           IconButton(
               onPressed: () => _openTransactionFormModal(context),
