@@ -57,19 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
           .isAfter(DateTime.now().subtract(const Duration(days: 7))))
       .toList();
 
-  AppBar get appBar => AppBar(
-        title: Text(
-          "Despesas Pessoais",
-          style:
-              TextStyle(fontSize: 20 * MediaQuery.of(context).textScaleFactor),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () => _openTransactionFormModal(context),
-              icon: const Icon(Icons.add))
-        ],
-      );
-
   _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
@@ -103,6 +90,26 @@ class _MyHomePageState extends State<MyHomePage> {
     bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
+    final appBar = AppBar(
+      title: Text(
+        "Despesas Pessoais",
+        style: TextStyle(fontSize: 20 * MediaQuery.of(context).textScaleFactor),
+      ),
+      actions: [
+        if (isLandscape)
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  _showChart = !_showChart;
+                });
+              },
+              icon: Icon(_showChart ? Icons.list : Icons.show_chart)),
+        IconButton(
+            onPressed: () => _openTransactionFormModal(context),
+            icon: const Icon(Icons.add)),
+      ],
+    );
+
     final availableHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         appBar.preferredSize.height;
@@ -113,20 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Exibir Gráfico"),
-                  Switch(
-                      value: _showChart,
-                      onChanged: (isShowing) {
-                        setState(() {
-                          _showChart = isShowing;
-                        });
-                      }),
-                ],
-              ),
             if (_showChart || !isLandscape)
               SizedBox(
                 height: availableHeight * (isLandscape ? 0.7 : 0.3),
