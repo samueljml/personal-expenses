@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/components/chart.dart';
 import 'package:personal_expenses/models/transaction.dart';
@@ -91,56 +93,80 @@ class _MyHomePageState extends State<MyHomePage> {
 
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
-    final appBar = AppBar(
-      title: Text(
-        "Despesas Pessoais",
-        style: TextStyle(fontSize: 20 * mediaQuery.textScaleFactor),
-      ),
-      actions: [
-        if (isLandscape)
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  _showChart = !_showChart;
-                });
-              },
-              icon: Icon(_showChart ? Icons.list : Icons.show_chart)),
-        IconButton(
-            onPressed: () => _openTransactionFormModal(context),
-            icon: const Icon(Icons.add)),
-      ],
-    );
+    _getIconButton(Icon icon, void Function()? fn) {
+      return Platform.isIOS
+          ? GestureDetector(
+              child: icon,
+              onTap: fn,
+            )
+          : IconButton(
+              onPressed: fn,
+              icon: icon,
+            );
+    }
+
+    final actions = [
+      if (isLandscape)
+        _getIconButton(Icon(_showChart ? Icons.list : Icons.show_chart), () {
+          setState(() {
+            _showChart = !_showChart;
+          });
+        }),
+      _getIconButton(
+        Platform.isIOS ? const Icon(CupertinoIcons.add) : const Icon(Icons.add),
+        () => _openTransactionFormModal(context),
+      )
+    ];
+
+    final PreferredSizeWidget appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: const Text("Despesas Pessoais"),
+            trailing: Row(
+              children: actions,
+            ),
+          )
+        : AppBar(
+            title: Text(
+              "Despesas Pessoais",
+              style: TextStyle(fontSize: 20 * mediaQuery.textScaleFactor),
+            ),
+            actions: actions,
+          ) as PreferredSizeWidget;
 
     final availableHeight = mediaQuery.size.height -
         mediaQuery.padding.top -
         appBar.preferredSize.height;
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (_showChart || !isLandscape)
-              SizedBox(
-                height: availableHeight * (isLandscape ? 0.8 : 0.3),
-                child: Chart(recentTransactions),
+    final bodyPage = SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (_showChart || !isLandscape)
+            SizedBox(
+              height: availableHeight * (isLandscape ? 0.8 : 0.3),
+              child: Chart(recentTransactions),
+            ),
+          if (!_showChart || !isLandscape)
+            SizedBox(
+              height: availableHeight * (isLandscape ? 1 : 0.7),
+              child: TransactionList(
+                _transactions,
+                onRemove: _removeTransaction,
               ),
-            if (!_showChart || !isLandscape)
-              SizedBox(
-                height: availableHeight * (isLandscape ? 1 : 0.7),
-                child: TransactionList(
-                  _transactions,
-                  onRemove: _removeTransaction,
-                ),
-              )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _openTransactionFormModal(context),
-        child: const Icon(Icons.add),
+            )
+        ],
       ),
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(child: bodyPage)
+        : Scaffold(
+            appBar: appBar,
+            body: bodyPage,
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => _openTransactionFormModal(context),
+              child: const Icon(Icons.add),
+            ),
+          );
   }
 }
