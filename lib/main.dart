@@ -91,6 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
 
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+    final chartList =
+        Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
     _getIconButton(Icon icon, void Function()? fn) {
@@ -107,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final actions = [
       if (isLandscape)
-        _getIconButton(Icon(_showChart ? Icons.list : Icons.show_chart), () {
+        _getIconButton(Icon(_showChart ? iconList : chartList), () {
           setState(() {
             _showChart = !_showChart;
           });
